@@ -11,31 +11,48 @@ import android.widget.Toast;
 
 import java.io.PrintStream;
 
-public class MainActivity extends AppCompatActivity {
-    TextView text;
-    EditText n1;
-    int n,result;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    EditText editText;
     Button button;
+    TextView result;
+    int ans = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toast.makeText(this, "Good Morning", Toast.LENGTH_SHORT).show();
-        text = findViewById(R.id.text);
-        n1 = findViewById(R.id.n1);
-//        n2 = findViewById(R.id.n2);
-        button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        editText = (EditText)findViewById(R.id.editText);
+        button = (Button)findViewById(R.id.button);
+        result = (TextView)findViewById(R.id.textView);
 
-                for (n = 1;n<=10;n++) {
-                    int result = Integer.parseInt(n1.getText().toString()) * n;
+        // set clickListener on button
+        button.setOnClickListener(this);
+    }
+    public void onClick(View v)
+    {
+
+        switch (v.getId()) {
+
+            case R.id.button:
+                StringBuffer buffer = new StringBuffer();
+                int res;
+
+                // get the input number from editText
+                String fs = editText.getText().toString();
+
+                // convert it to integer
+                int n = Integer.parseInt(fs);
+
+                // build the logic for table
+                for (int i = 1; i <= 10; i++) {
+                    ans = (i * n);
+                    buffer.append(n + " X " + i
+                            + " = " + ans + "\n\n");
                 }
-                text.setText(Integer.parseInt(n1.getText().toString()) +"*"+n + "=" + result + "\n");
-            }
-        });
 
-
+                // set the buffer textview
+                result.setText(buffer);
+                break;
+        }
     }
 }
